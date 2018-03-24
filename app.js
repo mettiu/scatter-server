@@ -1,4 +1,3 @@
-require('babel-register');
 const appConfig = require('./config.js');
 const bodyParser = require('body-parser');
 const compression = require('compression');
@@ -23,7 +22,6 @@ const app = express();
 
 // Connect Mongoose
 mongoose.connect('mongodb://192.168.1.9/musiclist', {
-  useMongoClient: true,
   /* other options */
 });
 
