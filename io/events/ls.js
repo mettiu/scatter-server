@@ -10,7 +10,7 @@ function ls(io) {
   io.on('connection', (socket) => {
     socket.on('file-list', async (data, fn) => {
       console.log('data: ', data);
-      // console.log(socket.request);
+      console.log('suserId: ', socket.sUserId);
 
       const searchValue = {
         user: ObjectId('5a3507457db4e6110651379b'),
