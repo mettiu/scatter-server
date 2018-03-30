@@ -4,7 +4,6 @@ function connection(io) {
   io.on('connection', (socket) => {
     socket.on('disconnect', (reason) => {
       console.log('Disconnect Event ', reason);
-      sessions.remove(socket.id);
     });
   });
 }

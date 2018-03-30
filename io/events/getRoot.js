@@ -8,7 +8,6 @@ mongoose.Promise = global.Promise;
 function getRoot(io) {
   io.on('connection', (socket) => {
     socket.on('get-root', async (data, fn) => {
-      // TODO: extract userId from session (or wherever it is!)
       const userId = socket.sDecoded._id; // '5a3507457db4e6110651379b';
 
       let rootFolder;
@@ -29,6 +28,7 @@ function getRoot(io) {
         console.log('rootfolder created!');
       }
 
+      socket.sCurrentFolder = rootFolder; // eslint-disable-line no-param-reassign
       fn(JSON.stringify(rootFolder));
     });
   });

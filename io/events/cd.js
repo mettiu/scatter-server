@@ -5,11 +5,9 @@ const mongoose = require('mongoose');
 // configure mongoose promises
 mongoose.Promise = global.Promise;
 
-function mkdir(io) {
+function cd(io) {
   io.on('connection', (socket) => {
     socket.on('cd', async (data, fn) => {
-      // TODO: extract userId from session (or wherever it is!)
-
       const file = await File.findOne({ _id: await getFolderId(data.workingFolderId) });
 
       const dataBuffer = Buffer.from(data.buffer, 'base64');
