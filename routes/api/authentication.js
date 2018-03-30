@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
     // If logged in, we should have user info to send back
     if (req.user) {
       const user = req.user.toObject();
-      user.jwt = jwt.sign(user, 'secret'); // TODO: set a better secret here
+      user.jwt = jwt.sign(user, appConfig.jwt.secret);
       return res.send(JSON.stringify(user));
     }
 
