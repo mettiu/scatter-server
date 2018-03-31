@@ -13,7 +13,7 @@ async function saveFolder(folderToSave) {
   return savedFolder;
 }
 
-// manage file announcement
+// manage folder creation
 function mkdir(io) {
   io.on('connection', (socket) => {
     socket.on('mkdir', async (data, fn) => {
