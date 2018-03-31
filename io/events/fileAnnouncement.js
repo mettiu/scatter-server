@@ -27,7 +27,7 @@ function fileAnnouncement(io) {
 
       const searchValue = {
         fileName: data.fileName,
-        user: ObjectId('5a3507457db4e6110651379b'),
+        user: socket.sDecoded._id, // ObjectId('5a3507457db4e6110651379b'),
         folder: socket.sCurrentFolder._id,
       };
       console.log('search:', searchValue);
@@ -35,7 +35,7 @@ function fileAnnouncement(io) {
       const files = await query.exec();
 
       const fileToSave = Object.assign({
-        user: ObjectId('5a3507457db4e6110651379b'),
+        user: socket.sDecoded._id, // ObjectId('5a3507457db4e6110651379b'),
         folder: socket.sCurrentFolder._id,
       }, data);
 
