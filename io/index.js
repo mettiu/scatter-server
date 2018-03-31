@@ -1,3 +1,4 @@
+const cd = require('./events/cd');
 const connect = require('./events/connect');
 const disconnect = require('./events/disconnect');
 const fileAnnouncement = require('./events/fileAnnouncement');
@@ -6,7 +7,7 @@ const getRoot = require('./events/getRoot');
 const login = require('./events/login');
 const ls = require('./events/ls');
 const mkdir = require('./events/mkdir');
-const cd = require('./events/cd');
+const pwd = require('./events/pwd');
 
 
 function setupIO(io) {
@@ -19,6 +20,7 @@ function setupIO(io) {
   login(io);
   ls(io);
   mkdir(io);
+  pwd(io);
 }
 
 module.exports = setupIO;

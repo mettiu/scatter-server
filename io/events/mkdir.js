@@ -27,7 +27,7 @@ function mkdir(io) {
       if (await Folder.exists(searchValue)) {
         fn(JSON.stringify({
           created: false,
-          message: `Folder ${data.name} already existing.`,
+          message: `Folder '${data.name}' already exists. Can't create.`,
         }));
         return;
       }
