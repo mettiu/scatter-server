@@ -23,6 +23,12 @@ folderSchema.statics.createRoot = function (userId) {
   return rootFolder.save();
 };
 
+folderSchema.statics.exists = async function (searchValue) {
+  const query = this.findOne(searchValue);
+  const found = await query.exec();
+  return !!found; // return found ? true : false;
+};
+
 const Folder = mongoose.model('Folder', folderSchema);
 
 module.exports = Folder;
