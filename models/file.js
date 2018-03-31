@@ -6,6 +6,7 @@ mongoose.Promise = global.Promise;
 const fileSchema = new Schema(
   {
     fileName: String,
+    folder: { type: mongoose.Schema.Types.ObjectId, ref: 'Folder' },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     size: Number, // TODO: use a long for file size
     lastModified: Date,
