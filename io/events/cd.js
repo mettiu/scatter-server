@@ -20,7 +20,7 @@ function cd(io) {
       if (!destinationFolder) {
         fn(JSON.stringify({
           error: true,
-          message: `Folder ${data.name} does not exist.`,
+          message: `Folder '${data.name}' does not exist.`,
         }));
         return;
       }

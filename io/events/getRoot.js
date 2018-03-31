@@ -29,6 +29,7 @@ function getRoot(io) {
       }
 
       socket.sCurrentFolder = rootFolder; // eslint-disable-line no-param-reassign
+      socket.sRootFolder = rootFolder; // eslint-disable-line no-param-reassign
       fn(JSON.stringify(rootFolder));
     });
   });
