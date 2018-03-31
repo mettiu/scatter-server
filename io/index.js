@@ -5,6 +5,7 @@ const fileChunkUpload = require('./events/fileChunkUpload');
 const getRoot = require('./events/getRoot');
 const login = require('./events/login');
 const ls = require('./events/ls');
+const mkdir = require('./events/mkdir');
 
 function setupIO(io) {
   connect(io);
@@ -14,6 +15,7 @@ function setupIO(io) {
   getRoot(io);
   login(io);
   ls(io);
+  mkdir(io);
 }
 
 module.exports = setupIO;

@@ -30,6 +30,7 @@ router.get('/logout', (req, res) => {
 // POST to /login
 router.post('/login', async (req, res) => {
   // look up the user by their email
+  console.log('email', req.body.email);
   const query = User.findOne({ email: req.body.email });
   const foundUser = await query.exec();
 
