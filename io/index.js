@@ -6,8 +6,11 @@ const getRoot = require('./events/getRoot');
 const login = require('./events/login');
 const ls = require('./events/ls');
 const mkdir = require('./events/mkdir');
+const cd = require('./events/cd');
+
 
 function setupIO(io) {
+  cd(io);
   connect(io);
   disconnect(io);
   fileAnnouncement(io);
