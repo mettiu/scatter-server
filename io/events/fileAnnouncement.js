@@ -25,14 +25,9 @@ function fileAnnouncement(io) {
     socket.on('file-upload', async (data, fn) => {
       console.log('data: ', data);
 
-      const searchValue = {
-        fileName: data.fileName,
-        user: socket.sDecoded._id, // ObjectId('5a3507457db4e6110651379b'),
-        folder: socket.sCurrentFolder._id,
-      };
-      console.log('search:', searchValue);
-      const query = File.find(searchValue).sort({ createdAt: -1 });
-      const files = await query.exec();
+      const sort = { createdAt: -1 };
+      const files = await File
+        .findInFolderByName(data.fileName, socket.sDecoded._id, socket.sCurrentFolder._id, sort);
 
       const fileToSave = Object.assign({
         user: socket.sDecoded._id, // ObjectId('5a3507457db4e6110651379b'),

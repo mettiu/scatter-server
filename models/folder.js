@@ -29,6 +29,20 @@ folderSchema.statics.exists = async function (searchValue) {
   return !!found; // return found ? true : false;
 };
 
+folderSchema.statics.listFoldersInFolder = async function (userId, folderId, sort) {
+  const where = {
+    user: userId,
+    parent: folderId,
+    $or: [
+      { deleted: false },
+      { deleted: { $not: { $exists: true } } },
+    ],
+  };
+  const query = this.find(where).sort(sort);
+  const found = await query.exec();
+  return found;
+};
+
 const Folder = mongoose.model('Folder', folderSchema);
 
 module.exports = Folder;

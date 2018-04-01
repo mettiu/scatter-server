@@ -1,3 +1,5 @@
+require('events').EventEmitter.defaultMaxListeners = Infinity;
+
 const cd = require('./events/cd');
 const connect = require('./events/connect');
 const disconnect = require('./events/disconnect');
@@ -8,6 +10,7 @@ const login = require('./events/login');
 const ls = require('./events/ls');
 const mkdir = require('./events/mkdir');
 const pwd = require('./events/pwd');
+const rm = require('./events/rm');
 
 
 function setupIO(io) {
@@ -21,6 +24,7 @@ function setupIO(io) {
   ls(io);
   mkdir(io);
   pwd(io);
+  rm(io);
 }
 
 module.exports = setupIO;
