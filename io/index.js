@@ -11,6 +11,7 @@ const ls = require('./events/ls');
 const mkdir = require('./events/mkdir');
 const pwd = require('./events/pwd');
 const rm = require('./events/rm');
+const rmdir = require('./events/rmdir');
 
 
 function setupIO(io) {
@@ -25,6 +26,7 @@ function setupIO(io) {
   mkdir(io);
   pwd(io);
   rm(io);
+  rmdir(io);
 }
 
 module.exports = setupIO;
