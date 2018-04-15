@@ -12,7 +12,7 @@ function rm(io) {
       console.log('user', socket.sDecoded._id, 'currentfolder', socket.sCurrentFolder);
 
       const result =
-          await File.deleteFile(socket.sDecoded._id, socket.sCurrentFolder._id, data.fileName);
+          await File.deleteFile(socket.sDecoded._id, socket.sCurrentFolder._id, data.filename);
       fn(JSON.stringify({
         error: false,
         deleted: result,
