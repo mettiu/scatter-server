@@ -23,11 +23,11 @@ fileSchema.index({
   fileName: 1, user: 1, createdAt: -1, size: 1,
 }, { unique: true }); // schema level
 
-fileSchema.statics.deleteFile = async function (userId, folderId, filename) {
+fileSchema.statics.deleteFile = async function (userId, folderId, fileName) {
   const where = {
     user: userId,
     folder: folderId,
-    filename,
+    fileName,
     $or: [
       { deleted: false },
       { deleted: { $not: { $exists: true } } },
