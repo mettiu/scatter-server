@@ -60,6 +60,8 @@ typings/
 
 # Application Configuration
 config.json
+client/config.json
+server/config.json
 
 # Ide Configuration
 .idea/
