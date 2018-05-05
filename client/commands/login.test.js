@@ -19,7 +19,7 @@ const fake400 = {
   error: 'Bad Request',
 };
 
-describe('happy and successful', () => { 
+describe('happy and successful', () => {
   const fakeOkRequire = jest.fn()
     .mockReturnValue(new Promise((resolve) => {
       resolve(fakeUser);
@@ -55,7 +55,7 @@ describe('happy and successful', () => {
   });
 });
 
-describe('sad and unsuccessful (400)', () => { 
+describe('sad and unsuccessful (400)', () => {
   const fakeKo400Require = jest.fn()
     .mockReturnValue(new Promise((resolve, reject) => {
       reject(fake400);
