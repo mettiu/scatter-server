@@ -1,27 +1,35 @@
-const rp = require('request-promise-native');
-const Commander = require('../utils/commander');
+const request = require('request-promise-native');
+const config = require('../config');
 
-async function action(uri, username, password) {
-  const options = {
-    method: 'POST',
-    uri,
-    body: {
-      // email: 'mettiu@gmail.com',
-      username,
-      password,
-    },
-    json: true,
-  };
+const { uri } = config.http.login;
 
-  const token = await rp(options);
-  return token;
-}
+module.exports = require('./login-factory')({ request, uri });
 
-const command = {
-  name: 'login',
-  action,
-};
 
-Commander.createCommand(command);
+// const rp = require('request-promise-native');
+// const Commander = require('../utils/commander');
 
-module.exports = command;
+// async function action(uri, username, password) {
+//   const options = {
+//     method: 'POST',
+//     uri,
+//     body: {
+//       // email: 'mettiu@gmail.com',
+//       username,
+//       password,
+//     },
+//     json: true,
+//   };
+
+//   const token = await rp(options);
+//   return token;
+// }
+
+// const command = {
+//   name: 'login',
+//   action,
+// };
+
+// Commander.createCommand(command);
+
+// module.exports = command;

@@ -4,12 +4,19 @@
 
 const remote = 'http://localhost:3000';
 
-exports.httpConfig = {
-  login: {
-    // uri for POST http call for file announce
-    uri: `${remote}/api/authentication/login`,
+const config = {
+  http: {
+    login: {
+      // uri for POST http call for file announce
+      uri: `${remote}/api/authentication/login`,
+    },
   },
 };
+
+module.exports = config;
+
+// mantained single exports for backward compatibility
+exports.httpConfig = config.http;
 
 exports.socketConfig = {
   uri: remote,
