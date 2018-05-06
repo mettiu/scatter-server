@@ -4,7 +4,7 @@ const io = require('socket.io-client');
 
 const cdCommand = require('./commands/cd');
 const getRootCommand = require('./commands/getRoot');
-const { httpConfig, socketConfig } = require('./config');
+const config = require('./config');
 const loginCommand = require('./commands/login');
 const lsCommand = require('./commands/ls');
 const mkdirCommand = require('./commands/mkdir');
@@ -12,6 +12,8 @@ const pwdCommand = require('./commands/pwd');
 const rmCommand = require('./commands/rm');
 const rmdirCommand = require('./commands/rmdir');
 const uploadFileCommand = require('./commands/fileUpload');
+
+const makeCommandUtils = require('./commands/command-utils');
 
 const Commander = require('./utils/commander');
 
@@ -34,10 +36,11 @@ const status = {
 const vorpal = new Vorpal();
 
 vorpal
-  .delimiter(`${socketConfig.uri}:~$ `)
+  .delimiter(`${config.socket.uri}:~$ `)
   .show();
 
 let socket;
+
 vorpal
   .command('login', 'Login into server. This should be the first action to perform!')
   .action(async (args, cb) => {
@@ -46,7 +49,7 @@ vorpal
     // manage login process using http calls
     let response;
     try {
-      response = await Commander.exec(loginCommand.name, httpConfig.login.uri, 'mettiu', 'mettiu');
+      response = await Commander.exec(loginCommand.name, config.http.login.uri, 'mettiu', 'mettiu');
       // login(httpConfig.login.uri, 'mettiu', 'mettiu');
       // TODO: prompt user for username and password information
       vorpal.log('You are now logged in.');
@@ -65,7 +68,7 @@ vorpal
     status.userData = response;
 
     // setup socket.io connection, passing jwt token into querystring parameter 'token'
-    socket = io(socketConfig.uri, { query: { token: status.userData.jwt } });
+    socket = io(config.socket.uri, { query: { token: status.userData.jwt } });
 
     // Define connect and other socket.io connection related events management routines
     socket.on('connect', async () => {
@@ -75,7 +78,7 @@ vorpal
         // set status stuff
         status.firstConnectionDone = true;
         status.connected = true;
-        vorpal.log(`Connected to ${socketConfig.uri}`);
+        vorpal.log(`Connected to ${config.socket.uri}`);
 
         // get root folder information for this user from server
         status.rootFolder = await Commander.exec(getRootCommand.name, socket);
@@ -89,7 +92,7 @@ vorpal
     socket.on('disconnect', () => {
       // hide vorpal prompt and print console information about 'disconnect' event
       vorpal.ui.cancel();
-      vorpal.log(`Connection to ${socketConfig.uri} lost. Trying to reconnect...`);
+      vorpal.log(`Connection to ${config.socket.uri} lost. Trying to reconnect...`);
 
       // set status stuff
       status.connected = false;
@@ -103,7 +106,7 @@ vorpal
         status.connected = true;
 
         // print console information and show vorpal prompt
-        vorpal.log(`Connection to ${socketConfig.uri} re-established.`);
+        vorpal.log(`Connection to ${config.socket.uri} re-established.`);
         vorpal.show();
       }
     });
@@ -126,6 +129,8 @@ vorpal
     vorpal.hide();
     setTimeout(() => { vorpal.show(); cb(); }, 10000);
   });
+
+const { ls } = makeCommandUtils(socket);
 
 vorpal
   .command('ls', 'Outputs file list.')

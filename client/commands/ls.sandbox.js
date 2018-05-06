@@ -1,4 +1,6 @@
-const makeCommandUtils = require('./command-utils.factory');
+const io = require('socket.io-client');
+const config = require('../config');
+// const sendMessage = require('../utils/send-message');
 
 const fakeUser = {
   _id: '5a3507457db4e6110651379b',
@@ -12,80 +14,10 @@ const fakeUser = {
   jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGJ1bXMiOlsyMzc1OSwyMzcwNyw2NTAzNiw1MDY4ODhdLCJhcnRpc3RzIjpbMTAzNjg3LDEzMDE4NSwzMTQ3MzUsNjUyMCw4MTQyLDYyODUyOCwxNjIwNDMxLDQ1MDIyNCw1Nzk1NzUsMjUzMDg2MSw5MzM1NjksMzM3OTY0LDU4MTQ1OV0sIl9pZCI6IjVhMzUwNzQ1N2RiNGU2MTEwNjUxMzc5YiIsInNhbHQiOiJkY2Y5YzRiOGYxNGNmZWU0OTEyZDk2MGEyMjJlY2NhMTJkYmRjMzBkOTM2MmFkZmM5MGUzNjczMWM4NmVkMTllIiwiaGFzaCI6Ijg1ZTNkODU2NmQ5MjM3ODczZDZiYmViYmRkNjYwMmI1N2U5NWFmMzE3YTU0ZDNhYzBlMjY1OGExYTFlZThjZDE5N2JkMTc0YTE2NDBlM2ZkZmMyZjQyMWQ5MGVjZjllYmVkOTRhMGZiNTllOWY1YjUzNTgxNTcxZDA2YzkzYjE2N2M2ODUxNzc5NDI3NTUxOWNkNjk5MzFiOGNkMTFmYTM4MjAxNGVlZTBmOGUyZmY5ODcyNjQ4OWE4ZTQxZWQ5MmM1N2EzZGFlNTFmMGQ3NDFmYTc0OTUyZGQ4MzUxOTYwYzQ1ODk5MDczZjM3NTRmNDEwZjVkNGMxNDhjNjkyN2ZmYzYxZTVjZTRiMmU3ZjM2YmYzZWZjZGEzNWE4ZjliNDU5ZjMzOTBhMDZmOGZmYTE0NmVlZjlmZTdiZWFlMDJjODdhMGE0NjI0ODVmY2NlYTU3NWFlNDhiODZjYmE3ZDg4MTQ5NzBlOGRjZThhZGQyNGE4OTNiMThmNDMzNzhhNzI3MGQ3MzYyMGE2NWUzMjY0YWE2Nzc2M2Y5YTM0OGZhN2Y4M2Q1NWM0N2MzZjg1OGJkODk3MTg4NzU0NDMxYjg1ZDFhOGU0YmMzMjg5NzUwNDkyNDZlNzdlZjE0Njg0NWFhMzk1NmQzNjAxN2E3YTBhZmU2NGRhOTJjZGE5MmMyOWJmNTcxNTc4ZmNiNWVlMTU5YWY0OTM1MTk4YzFkM2U4MjA2NzVmYmI2YmIwOWYzNWE3MThjNGE3NmI4NzA4MTkxODc4MjExZjRlYzJmYzUwNzA1ODg2Mzc3ODc2YWQzNDEzYjZlODgxNjAxMDY1MDFkY2MwN2E5YzkxOGY3NDI5MTllMWVjN2I1ZjQ0MzEzMDkxNjI4OTU5ZTdjZjdmMTk1MTEyMjRlZWUxM2M4ZDc0NmYwYTFhNDUyY2NhMThkOGE3MjFlMTAwMDY4YmFmYTk3NWUxYjRkMTBhMGExN2NhMGE5MmQ5MmNmZGE1N2RkOTgxMTY3ZjIzNmRkNWJiOGU5NTU0M2NkZmE3NTIzN2QwNTBiOTM4M2I5MzI1ODQzYjgyMTk3OTgwMmQyOWJiYTYyYWExOTY2Y2Y1NDE2ZTE2ZjQ4ZmQ2YWYwN2JjODYxOGNiZWRiMjJhNmE5ODViNmQ4MmQ3YWU3ZTA4MDAzODgxMTA2MTkzZWIxMTNiNjVhZDc5ZWRhNDE3ZGNmMGU5YjBiMmVhNjVkYzY5MjBkN2Q4ODk3NDNlMGJmNWQwZTQ2NTQ4NDI0MTgyYjFmNGQyYzk4ODZlMThmNWE2YTI3OGNlMWVjMDZmMGJjMmFlOTZiNDk2OWE5ZGU1MGE1OTQ0MmFlYzA4MThiZTM4NDQ3YWUiLCJ1c2VybmFtZSI6Im1ldHRpdSIsImZpcnN0TmFtZSI6Ik1hdHRlbyIsImxhc3ROYW1lIjoiVGFtYnVyaW5pIiwiZW1haWwiOiJtZXR0aXVAZ21haWwuY29tIiwiX192Ijo0OSwiaWF0IjoxNTI1NDc1ODMxfQ.ip65_ZV7_QJjCQCCUhvZmTH_3DgD5RyPHG9sRpCe51Q',
 };
 
-const fake400 = {
-  name: 'StatusCodeError',
-  statusCode: 400,
-  message: '400 - "Bad Request"',
-  error: 'Bad Request',
-};
-
-const config = {
-  http: {
-    login: {
-      // uri for POST http call for file announce
-      uri: 'FakeURI',
-    },
-  },
-};
-
-describe('happy and successful', () => {
-  const fakeOkRequire = jest.fn()
-    .mockReturnValue(new Promise((resolve) => {
-      resolve(fakeUser);
-    }));
-
-  const { login } = makeCommandUtils(fakeOkRequire, null, config);
-
-  it('Should find the user', async () => {
-    let err;
-    let result;
-
-    try {
-      result = await login('test@example.com', 'test-undisclosed-password :-)');
-    } catch (e) {
-      err = e;
-    }
-    expect(err).toBeUndefined();
-    expect(result).toEqual(fakeUser);
-    expect(fakeOkRequire).toBeCalledWith({
-      method: 'POST',
-      uri: 'FakeURI',
-      body: {
-        email: 'test@example.com',
-        password: 'test-undisclosed-password :-)',
-      },
-      json: true,
-    });
-  });
+const sendMessage = (socket, eventname, data) => new Promise((resolve) => {
+  socket.on('connect_timeout', () => console.log('error!'));
+  socket.emit(eventname, data, ack => resolve(ack));
 });
 
-describe('sad and unsuccessful (400)', () => {
-  const fakeKo400Require = jest.fn()
-    .mockReturnValue(new Promise((resolve, reject) => {
-      reject(fake400);
-    }));
-
-  const { login } = makeCommandUtils(fakeKo400Require, null, config);
-
-  it('Should find the user', async () => {
-    let err;
-    let result;
-
-    try {
-      result = await login('test@example.com', 'test-undisclosed-password :-)');
-    } catch (e) {
-      err = e;
-    }
-    expect(err).toEqual(fake400);
-    expect(fakeKo400Require).toBeCalledWith({
-      method: 'POST',
-      uri: 'FakeURI',
-      body: {
-        email: 'test@example.com',
-        password: 'test-undisclosed-password :-)',
-      },
-      json: true,
-    });
-    expect(result).toBeUndefined();
-  });
-});
+const socket = io(config.socket.uri, { query: { token: fakeUser.jwt } });
+const result = sendMessage(socket, 'file-list', {});

@@ -1,10 +1,11 @@
-const { fileList } = require('../config');
 const { sendMessage } = require('../utils/send-message');
 const Commander = require('../utils/commander');
 
+const commandString = 'file-list';
+
 async function action(socket) {
   const data = {};
-  const ack = await sendMessage(socket, fileList.message, data);
+  const ack = await sendMessage(socket, commandString, data);
   // console.log(JSON.parse(ack));
   return JSON.parse(ack);
 }

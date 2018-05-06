@@ -11,16 +11,22 @@ const config = {
       uri: `${remote}/api/authentication/login`,
     },
   },
+  socket: {
+    uri: remote,
+  },
+  upload: {
+    chunkSize: 4096,
+  },
 };
 
 module.exports = config;
 
-// mantained single exports for backward compatibility
-exports.httpConfig = config.http;
+// // mantained single exports for backward compatibility
+// exports.httpConfig = config.http;
 
-exports.socketConfig = {
-  uri: remote,
-};
+// exports.socketConfig = {
+//   uri: remote,
+// };
 
 exports.chunkUpload = {
   // size of the data chunk, in bytes

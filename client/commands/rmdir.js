@@ -1,9 +1,10 @@
-const { rmdirCommand } = require('../config');
 const { sendMessage } = require('../utils/send-message');
 const Commander = require('../utils/commander');
 
+const commandString = 'rmdir';
+
 async function action(socket, folderName) {
-  const ack = await sendMessage(socket, rmdirCommand.message, { folderName });
+  const ack = await sendMessage(socket, commandString, { folderName });
   // console.log(JSON.parse(ack));
   return JSON.parse(ack);
 }
