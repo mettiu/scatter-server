@@ -30,10 +30,10 @@ router.get('/logout', (req, res) => {
 // POST to /login
 router.post('/login', async (req, res) => {
   // look up the user by their email
-  console.log('email', req.body.email);
   const query = User.findOne({ email: req.body.email });
   const foundUser = await query.exec();
 
+  req.body.username = 'dummy name';
   // if they exist, they'll have a username, so add that to our body
   if (foundUser) { req.body.username = foundUser.username; }
 
