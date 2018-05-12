@@ -1,8 +1,8 @@
-const appConfig = require('./config.js');
+const { db } = require('./config.js');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const express = require('express');
-const favicon = require('serve-favicon');
+// const favicon = require('serve-favicon');
 const helmet = require('helmet');
 const LocalStrategy = require('passport-local').Strategy;
 const logger = require('morgan');
@@ -21,7 +21,8 @@ const index = require('./routes/index');
 const app = express();
 
 // Connect Mongoose
-mongoose.connect('mongodb://192.168.1.9/musiclist', {
+const { connectionString } = db[process.env.NODE_ENV];
+mongoose.connect(connectionString, {
   /* other options */
 });
 
