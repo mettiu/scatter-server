@@ -63,3 +63,6 @@ config.json
 
 # Ide Configuration
 .idea/
+
+# Database data
+.dbdata/
