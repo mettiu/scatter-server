@@ -27,6 +27,11 @@ router.get('/logout', (req, res) => {
   return res.send(JSON.stringify(req.user));
 });
 
+// router.post('/login', async (req, res) => {
+//   console.log('REQ', req.body);
+//   return res.send({ user: 'tobi' });
+// });
+
 // POST to /login
 router.post('/login', async (req, res) => {
   // look up the user by their email
@@ -42,11 +47,11 @@ router.post('/login', async (req, res) => {
     if (req.user) {
       const user = req.user.toObject();
       user.jwt = jwt.sign(user, appConfig.jwt.secret);
-      return res.send(JSON.stringify(user));
+      return res.send(user);
     }
 
     // Otherwise return an error
-    return res.send(JSON.stringify({ error: 'There was an error logging in' }));
+    return res.send({ error: 'There was an error logging in' });
   });
 });
 

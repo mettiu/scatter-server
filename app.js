@@ -21,7 +21,7 @@ const index = require('./routes/index');
 const app = express();
 
 // Connect Mongoose
-const { connectionString } = db[process.env.NODE_ENV];
+const { connectionString } = db[(process.env.NODE_ENV || 'test')];
 mongoose.connect(connectionString, {
   /* other options */
 });
