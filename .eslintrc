@@ -15,6 +15,14 @@
       "specialLink": [ "to" ]
     }],
     "no-underscore-dangle"   : [2, { "allow": ["_id"] }],
-    "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"]
+    "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
+    "max-len": ["error", { 
+      "ignoreTrailingComments": true,
+      "ignoreComments": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true,
+      "code": 120,
+      "ignoreUrls": true
+    }]
   }
 }
