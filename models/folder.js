@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ObjectId } = require('mongoose').Types;
 const File = require('./file');
 
 const { Schema } = mongoose;
@@ -16,13 +17,27 @@ const folderSchema = new Schema(
   },
 );
 
-folderSchema.statics.createRoot = function (userId) {
+folderSchema.statics.getRoot = async function getRoot(userId) {
+  const query = this.findOne({ user: ObjectId(userId), name: '', parent: { $exists: false } });
+  query.select('_id name');
+  const rootFolder = await query.exec();
+  return rootFolder;
+};
+
+folderSchema.statics.createRoot = async function createRoot(userId) {
   const rootFolder = new this({
     name: '', // root folder name shall be empty string!
     user: userId,
     // root folder shall NOT have parent property!
   });
   return rootFolder.save();
+};
+
+folderSchema.statics.getOrCreateRoot = async function getOrCreateRoot(userId) {
+  let rootFolder = await this.getRoot(userId);
+  if (rootFolder !== null) return rootFolder;
+  rootFolder = await this.createRoot(userId);
+  return rootFolder;
 };
 
 folderSchema.statics.exists = async function (searchValue) {
